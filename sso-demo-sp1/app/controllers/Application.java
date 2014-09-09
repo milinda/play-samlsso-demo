@@ -16,6 +16,7 @@
 
 package controllers;
 
+import org.pac4j.core.profile.CommonProfile;
 import org.pac4j.play.java.JavaController;
 import org.pac4j.play.java.RequiresAuthentication;
 import play.*;
@@ -27,7 +28,8 @@ public class Application extends JavaController {
 
     @RequiresAuthentication(clientName = "Saml2Client")
     public static Result index() {
-        return ok(index.render("Your new application is ready."));
+        CommonProfile userProfile = getUserProfile();
+        return ok(index.render("Your new application is ready and your access token is: " + ((String)userProfile.getAttribute("access_token")).substring(0, 8) + "..."));
     }
 
 }

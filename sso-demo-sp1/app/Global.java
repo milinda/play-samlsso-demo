@@ -15,12 +15,10 @@
  */
 
 import org.pac4j.core.client.Clients;
+import org.pac4j.play.Config;
 import org.pac4j.saml.client.Saml2Client;
 import play.Application;
 import play.GlobalSettings;
-import org.pac4j.play.Config;
-import play.Play;
-import play.Logger;
 
 
 public class Global extends GlobalSettings {
@@ -37,6 +35,12 @@ public class Global extends GlobalSettings {
         saml2Client.setPrivateKeyPassword("pac4j-demo-passwd");
         saml2Client.setIdpMetadataPath("resource:idp.xml");
 
+        // Enable SAML2 Assertion to OAuth2 access token exchange
+        saml2Client.setOauth2ExchangeEnabled(true);
+        saml2Client.setOauth2ClientID("gf9FCED2Lbeczf7VXoVSX0miAREa");
+        saml2Client.setOauth2ClientSecret("ecVp8tSbdEuSOim6ACUzJKEZaCYa");
+        saml2Client.setOauth2TokenEndpoint("https://localhost:9443/oauth2/token");
+        saml2Client.setDevMode(true);
 
         final Clients clients = new Clients(baseUrl + "/callback", saml2Client);
         Config.setClients(clients);
